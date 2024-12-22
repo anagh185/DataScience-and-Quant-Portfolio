@@ -1,7 +1,0 @@
-City,Temperature (°C),Humidity (%),Wind Speed (m/s),Weather Description,Date,Feels Like,Sunrise,Sunset
-New York,-5.87,44,5.66,clear sky,2024-12-22 14:02:09,-12.69,07:17 AM,04:32 PM
-London,7.22,68,8.75,few clouds,2024-12-22 14:02:09,2.85,03:04 AM,10:53 AM
-Paris,4.95,90,5.66,broken clouds,2024-12-22 14:02:09,0.97,02:42 AM,10:56 AM
-Tokyo,3.7,35,10.29,clear sky,2024-12-22 14:02:09,-2.21,04:48 PM,02:32 AM
-Mumbai,23.99,78,0.0,mist,2024-12-22 14:02:09,24.48,08:38 PM,07:37 AM
-Richardson,13.78,53,5.66,few clouds,2024-12-22 14:02:10,12.6,08:26 AM,06:24 PM
