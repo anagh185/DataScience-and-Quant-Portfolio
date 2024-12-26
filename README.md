@@ -57,3 +57,31 @@ As part of my learning journey, I also share useful resources, tutorials, and no
 * Analytics Vidhya (Data Science Tutorials)
 
 I also keep track of resources that help with deploying models, setting up databases, and improving coding skills.
+
+# Getting Started
+To get started with my portfolio, you can:
+
+Clone this repository:
+
+bash
+Copy code
+git clone https://github.com/anagh185/DataScience-and-Quant-Portfolio.git
+
+Explore the projects: Each project is in its own directory and comes with instructions on how to run the code and see the results.
+
+Install dependencies: Each project typically has its own set of dependencies listed in a requirements.txt file or a README.md inside the project folder.
+
+Contribute: If you find a bug or would like to contribute to a project, feel free to open an issue or make a pull request.
+
+# Contributing
+Contributions are always welcome! If you want to help improve this repository or add new projects, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes.
+4. Submit a pull request with a clear description of the changes and why they are useful.
+Please make sure to follow standard code formatting and provide comments for clarity.
+
+
+* Contact
+If you have any questions or feedback, feel free to reach out to me via GitHub issues or connect with me on LinkedIn.
