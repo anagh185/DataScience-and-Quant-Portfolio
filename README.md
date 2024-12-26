@@ -63,8 +63,6 @@ To get started with my portfolio, you can:
 
 Clone this repository:
 
-bash
-Copy code
 git clone https://github.com/anagh185/DataScience-and-Quant-Portfolio.git
 
 Explore the projects: Each project is in its own directory and comes with instructions on how to run the code and see the results.
