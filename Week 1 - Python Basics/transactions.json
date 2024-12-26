@@ -1,0 +1,12 @@
+transactions = [
+    {"date": "2024-12-20", "category": "Groceries", "amount": 45.67, "description": "Supermarket shopping"},
+    {"date": "2024-12-19", "category": "Entertainment", "amount": 15.00, "description": "Movie night"},
+    {"date": "2024-12-18", "category": "Transportation", "amount": 25.50, "description": "Monthly bus pass"},
+    {"date": "2024-12-17", "category": "Dining Out", "amount": 30.00, "description": "Dinner with friends"},
+    {"date": "2024-12-16", "category": "Health", "amount": 60.00, "description": "Pharmacy supplies"},
+    {"date": "2024-12-15", "category": "Shopping", "amount": 120.00, "description": "Clothing purchase"},
+    {"date": "2024-12-14", "category": "Utilities", "amount": 80.00, "description": "Electricity bill"},
+    {"date": "2024-12-13", "category": "Groceries", "amount": 55.25, "description": "Weekly grocery run"},
+    {"date": "2024-12-12", "category": "Education", "amount": 200.00, "description": "Online course subscription"},
+    {"date": "2024-12-11", "category": "Entertainment", "amount": 50.00, "description": "Concert tickets"}
+]
