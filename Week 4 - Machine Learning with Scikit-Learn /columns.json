@@ -1,1 +1,28 @@
-{"data_columns": ["gender", "seniorcitizen", "partner", "dependents", "tenure", "phoneservice", "multiplelines", "onlinesecurity", "onlinebackup", "deviceprotection", "techsupport", "streamingtv", "streamingmovies", "paperlessbilling", "monthlycharges", "totalcharges", "internetservice_fiber optic", "internetservice_no", "contract_one year", "contract_two year", "paymentmethod_credit card (automatic)", "paymentmethod_electronic check", "paymentmethod_mailed check", "monthlychargepertenure"]}
+{
+    "data_columns": [
+        "gender",
+        "seniorcitizen",
+        "partner",
+        "dependents",
+        "tenure",
+        "phoneservice",
+        "multiplelines",
+        "onlinesecurity",
+        "onlinebackup",
+        "deviceprotection",
+        "techsupport",
+        "streamingtv",
+        "streamingmovies",
+        "paperlessbilling",
+        "monthlycharges",
+        "totalcharges",
+        "internetservice_fiber optic",
+        "internetservice_no",
+        "contract_one year",
+        "contract_two year",
+        "paymentmethod_credit card (automatic)",
+        "paymentmethod_electronic check",
+        "paymentmethod_mailed check",
+        "monthlychargepertenure"
+    ]
+}
