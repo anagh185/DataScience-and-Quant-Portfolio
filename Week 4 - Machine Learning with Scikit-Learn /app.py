@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 app = Flask(__name__)
 
 # 1. Load your model
-with open("/Users/anaghabhole/Documents/Projects/DataScience-and-Quant-Portfolio/Week 4 - Machine Learning with Scikit-Learn /best_xgb.pkl", "rb") as f:
+with open("/DataScience-and-Quant-Portfolio/Week 4 - Machine Learning with Scikit-Learn /best_xgb.pkl", "rb") as f:
     best_xgb = pickle.load(f)
 
 # 2. Define route for predictions
