@@ -3,19 +3,19 @@ import openai
 import os
 import requests
 
-# 🎨 Streamlit UI Config
+#  Streamlit UI Config
 st.set_page_config(page_title="CupidAI - Valentine's Gift Finder", page_icon="💝", layout="wide")
 
-# 🔑 Load OpenAI API Key Securely
+#  Load OpenAI API Key Securely
 api_key = os.getenv("OPENAI_API_KEY")
 
 if not api_key:
-    st.error("❌ OpenAI API Key is missing! Set it as an environment variable.")
+    st.error(" OpenAI API Key is missing! Set it as an environment variable.")
 else:
     # Initialize OpenAI Client
     client = openai.OpenAI(api_key=api_key)
 
-# 🎁 Function: AI-Powered Gift Suggestions
+# Function: AI-Powered Gift Suggestions
 def generate_gift_recommendations(budget, recipient, interests):
     """Generate AI-powered Valentine's Day gift recommendations."""
     messages = [
@@ -33,27 +33,27 @@ def generate_gift_recommendations(budget, recipient, interests):
         return response.choices[0].message.content
 
     except openai.AuthenticationError:
-        return "❌ Invalid API Key. Please check your OpenAI API key."
+        return " Invalid API Key. Please check your OpenAI API key."
     except openai.error.OpenAIError as e:
-        return f"❌ OpenAI API Error: {str(e)}"
+        return f" OpenAI API Error: {str(e)}"
     except Exception as e:
-        return f"❌ Unexpected Error: {str(e)}"
+        return f" Unexpected Error: {str(e)}"
 
-# 🛍️ Function: Fetch Product Links from Amazon/Etsy
+#  Function: Fetch Product Links from Amazon/Etsy
 def get_product_links(search_query):
     """Mock function for product search. Replace with actual API integration."""
     amazon_url = f"https://www.amazon.com/s?k={search_query.replace(' ', '+')}"
     etsy_url = f"https://www.etsy.com/search?q={search_query.replace(' ', '+')}"
     return amazon_url, etsy_url
 
-# 🎉 Fun Header
+#   Header
 st.markdown(
     "<h1 style='text-align: center; color: #FF4081;'>💝 AI Valentine's Day Gift Guide 💝</h1>",
     unsafe_allow_html=True
 )
-st.write("### 🌟 Let CupidAI find the **perfect** Valentine's Day gift for your loved one! 🎁")
+st.write("###  Let CupidAI find the **perfect** Valentine's Day gift for your loved one! ")
 
-# 💰 User Inputs
+#  User Inputs
 col1, col2, col3 = st.columns(3)
 with col1:
     budget = st.selectbox("💰 Budget:", ["<$50", "$50-$100", "$100+"])
@@ -65,13 +65,13 @@ with col3:
 # 🔍 Generate AI Gift Recommendations
 if st.button("🔮 Find the Perfect Gift!"):
     if not api_key:
-        st.error("❌ OpenAI API Key is missing. Set it as an environment variable.")
+        st.error(" OpenAI API Key is missing. Set it as an environment variable.")
     elif interests:
         st.markdown("## ✨ AI’s Gift Recommendations ✨")
         with st.spinner("Thinking... 💡"):
             recommendations = generate_gift_recommendations(budget, recipient, interests)
         
-        # 🎁 Display AI Suggestions
+        #  Display AI Suggestions
         gifts = recommendations.split("\n")[:3]  # Get first 3 gift ideas
         for gift in gifts:
             if gift.strip():
@@ -88,4 +88,4 @@ if st.button("🔮 Find the Perfect Gift!"):
                 
                 st.write("---")  # Divider line
     else:
-        st.warning("⚠️ Please enter some interests to get personalized recommendations! 😊")
+        st.warning(" Please enter some interests to get personalized recommendations! 😊")
