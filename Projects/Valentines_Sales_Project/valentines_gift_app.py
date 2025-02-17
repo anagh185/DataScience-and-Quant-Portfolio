@@ -21,7 +21,7 @@ def generate_gift_recommendations(budget, recipient, interests):
     """Generate AI-powered Valentine's Day gift recommendations."""
     messages = [
         {"role": "system", "content": "You are an expert Valentine's Day gift advisor."},
-        {"role": "user", "content": f"I need a deeply personal Valentine's Day gift idea for someone special. My budget is {budget}. They are my {recipient} (e.g., partner, best friend, parent) and they truly love {interests}. Instead of something generic, I want a gift that feels meaningful, emotional, or tied to a shared memory or experience. It should be something that shows I’ve really put thought into it. Avoid overused gifts like chocolates or basic flowers—give me a unique, heartfelt idea that will make them feel special and appreciated."}
+        {"role": "user", "content": f"I need a deeply personal Valentine's Day gift idea for someone special. My budget is {budget}. They are my {recipient} (e.g., partner, best friend, parent) and they truly love {interests}. Instead of something generic, I want a gift that feels meaningful, emotional, or tied to a shared memory or experience. It should be something that shows I’ve really put thought into it. Avoid overused gifts like chocolates or basic flowers—give me a unique, heartfelt idea that will make them feel special and appreciated. Keep keywords in the first few words"}
     ]
 
     try:
