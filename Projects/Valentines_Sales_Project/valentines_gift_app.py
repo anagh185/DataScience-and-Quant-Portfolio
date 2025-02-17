@@ -3,7 +3,7 @@ import streamlit as st
 import os
 # Streamlit App
 st.set_page_config(page_title="AI Valentine's Gift Generator", page_icon="💖")
-st.title("💖 AI Valentine's Gift Generator")
+st.title("💖 CupidAI Valentine's Gift Generator")
 st.subheader("Get a thoughtful, personalized gift idea for your special someone!")
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 # User Inputs
