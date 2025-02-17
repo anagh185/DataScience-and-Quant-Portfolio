@@ -3,3 +3,17 @@ requests
 transformers
 torch
 openai
+anthropic
+pandas
+numpy
+scipy
+scikit-learn
+matplotlib
+seaborn
+plotly
+dash
+flask
+gunicorn
+pydantic
+fastapi
+uvicorn

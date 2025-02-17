@@ -1,7 +1,8 @@
 import streamlit as st
 import os
 import openai
-
+import anthropic
+import cohere
 # Streamlit App Configuration
 st.set_page_config(page_title="AI Valentine's Gift Generator", page_icon="💖")
 st.title("💖 CupidAI Valentine's Gift Generator")
@@ -49,7 +50,7 @@ if st.button("Generate Gift Idea 💝"):
                 gift_idea = response.choices[0].message.content.strip()
 
             elif api_provider == "Anthropic":
-                import anthropic
+                
                 client = anthropic.Anthropic(api_key=api_key)
                 response = client.messages.create(
                     model="claude-3",
@@ -59,7 +60,7 @@ if st.button("Generate Gift Idea 💝"):
                 gift_idea = response.content[0].text.strip()
 
             elif api_provider == "Cohere":
-                import cohere
+                
                 client = cohere.Client(api_key)
                 response = client.generate(
                     model="command-r",
