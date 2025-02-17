@@ -18,7 +18,7 @@ else:
 def generate_gift_recommendations(budget, recipient, interests):
     """Generate AI-powered Valentine's Day gift recommendations using LLaMA 3."""
     
-    API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-3.2-1B"
+    API_URL = "https://api-inference.huggingface.co/models/google/gemma-7b"
     headers = {"Authorization": f"Bearer {HUGGINGFACE_API_KEY}"}
     
     prompt = f"""
