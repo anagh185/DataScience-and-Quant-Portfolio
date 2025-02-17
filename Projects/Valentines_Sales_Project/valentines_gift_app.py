@@ -14,11 +14,12 @@ if not HUGGINGFACE_API_KEY:
 else:
     st.success("Hugging Face API Key loaded successfully!")
 
-# AI-Powered Gift Suggestions (Using Hugging Face LLaMA 3)
+# AI-Powered Gift Suggestions (Using Hugging Face API)
 def generate_gift_recommendations(budget, recipient, interests):
-    """Generate AI-powered Valentine's Day gift recommendations using LLaMA 3."""
+    """Generate AI-powered Valentine's Day gift recommendations using Hugging Face."""
     
-    API_URL = "https://api-inference.huggingface.co/models/google/gemma-7b"
+    # Recommended model: Mistral 7B (Better at structured output)
+    API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct"
     headers = {"Authorization": f"Bearer {HUGGINGFACE_API_KEY}"}
     
     prompt = f"""
@@ -27,23 +28,26 @@ def generate_gift_recommendations(budget, recipient, interests):
     - Relationship: {recipient} 
     - Interests: {interests} 
 
-    Instead of something generic, I want gifts that feel meaningful, emotional, or tied to a shared memory.
-    Each suggestion should be numbered (1, 2, 3) and formatted exactly like this:
+    Strictly follow this format:
+    1. [Gift Name]: [Short description]  
+    2. [Gift Name]: [Short description]  
+    3. [Gift Name]: [Short description]  
 
-    1. Gift Name: Short description  
-    2. Gift Name: Short description  
-    3. Gift Name: Short description  
-
-    No introductory text, no explanations—just three gift ideas in this exact format.
-    Avoid overused ideas like chocolates or basic flowers.
+    Do not include explanations, introductions, or extra text. Only return the list.
     """
 
     response = requests.post(API_URL, headers=headers, json={"inputs": prompt})
     
-    if response.status_code == 200:
-        return response.json()[0]["generated_text"]  # Extract AI response
+    response_json = response.json()
+    if response.status_code == 200 and isinstance(response_json, list) and "generated_text" in response_json[0]:
+        return response_json[0]["generated_text"]
     else:
-        return "AI model unavailable. Try again later."
+        # Failsafe backup gift suggestions
+        return (
+            "1. Personalized Star Map: A custom map of the stars from a meaningful date.\n"
+            "2. Custom Soundwave Art: A printed soundwave of a special song or voice note.\n"
+            "3. Handwritten Letter Necklace: A pendant with an engraved handwritten message."
+        )
 
 # Extract Keywords for Amazon/Etsy Search
 def extract_search_keywords(gift_description):
@@ -85,19 +89,29 @@ if st.button("Find the Perfect Gift!"):
         with st.spinner("Thinking..."):
             recommendations = generate_gift_recommendations(budget, recipient, interests)
         
-        # Display AI Suggestions
-        gift_suggestions = recommendations.split("\n")[:3]  # Get first 3 gift ideas
-        for gift in gift_suggestions:
-            if gift.strip():
-                st.subheader(f"{gift.strip()}")  # Show full AI suggestion
+        # Extract AI Suggestions using regex for better accuracy
+        gift_suggestions = re.findall(r"\d+\.\s(.+?):\s(.+)", recommendations)
 
-                # Generate Product Links
-                amazon_link, etsy_link = get_product_links(gift.strip())
-                
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.markdown(f"[Find on Amazon]({amazon_link})", unsafe_allow_html=True)
-                with col2:
-                    st.markdown(f"[Find on Etsy]({etsy_link})", unsafe_allow_html=True)
-                
-                st.write("---")  # Divider line
+        if not gift_suggestions:
+            st.error("AI response was invalid. Showing default gift suggestions.")
+            gift_suggestions = [
+                ("Personalized Star Map", "A custom map of the stars from a meaningful date."),
+                ("Custom Soundwave Art", "A printed soundwave of a special song or voice note."),
+                ("Handwritten Letter Necklace", "A pendant with an engraved handwritten message."),
+            ]
+
+        # Display AI Suggestions
+        for gift_name, gift_desc in gift_suggestions[:3]:  # Ensure max 3 suggestions
+            st.subheader(f"{gift_name}")
+            st.write(gift_desc)
+
+            # Generate Product Links
+            amazon_link, etsy_link = get_product_links(gift_name)
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown(f"[Find on Amazon]({amazon_link})", unsafe_allow_html=True)
+            with col2:
+                st.markdown(f"[Find on Etsy]({etsy_link})", unsafe_allow_html=True)
+            
+            st.write("---")  # Divider line
