@@ -21,7 +21,24 @@ def generate_gift_recommendations(budget, recipient, interests):
     """Generate AI-powered Valentine's Day gift recommendations."""
     messages = [
         {"role": "system", "content": "You are an expert Valentine's Day gift advisor."},
-        {"role": "user", "content": f"I need a deeply personal Valentine's Day gift idea for someone special. My budget is {budget}. They are my {recipient} (e.g., partner, best friend, parent) and they truly love {interests}. Instead of something generic, I want a gift that feels meaningful, emotional, or tied to a shared memory or experience. It should be something that shows I’ve really put thought into it. Avoid overused gifts like chocolates or basic flowers—give me a unique, heartfelt idea that will make them feel special and appreciated. Keep keywords in the first few words"}
+        {"role": "user", "content": f"""
+        I need **three unique, thoughtful Valentine's Day gift ideas** for someone special. 
+        - Budget: {budget} 
+        - Relationship: {recipient} 
+        - Interests: {interests} 
+        
+        Instead of something generic, I want gifts that feel **meaningful, emotional, or tied to a shared memory**.
+        Each suggestion should:
+        1️⃣ Start with the **gift name** in 3-5 words.
+        2️⃣ Follow with a **short description** (why it's great, personal connection, unique touch).
+        
+        Format:
+        - **Gift Name**: Short description  
+        - **Gift Name**: Short description  
+        - **Gift Name**: Short description  
+
+        No introductory text, just the list of gifts. Avoid overused ideas like chocolates or basic flowers.
+        """}
     ]
 
     try:
@@ -29,7 +46,7 @@ def generate_gift_recommendations(budget, recipient, interests):
             model="gpt-4",
             messages=messages,
             temperature=0.7,
-            max_tokens=250
+            max_tokens=300
         )
         return response.choices[0].message.content
 
@@ -44,8 +61,9 @@ def generate_gift_recommendations(budget, recipient, interests):
 def extract_search_keywords(gift_description):
     """Extracts only the first 3-5 words of the gift name for better search results."""
     gift_keywords = re.sub(r'[^a-zA-Z0-9\s]', '', gift_description)  # Remove special characters
+    gift_keywords = gift_keywords.split(":")[0]  # Extract only the gift name before ':'
     gift_keywords = ' '.join(gift_keywords.split()[:4])  # Limit to first 4 words
-    return gift_keywords
+    return gift_keywords.strip()
 
 def get_product_links(gift_description):
     """Fetches product search links using extracted keywords."""
@@ -80,7 +98,7 @@ if st.button("🔮 Find the Perfect Gift!"):
             recommendations = generate_gift_recommendations(budget, recipient, interests)
         
         # 🎁 Display AI Suggestions
-        gifts = recommendations.split("\n")[:2]  # Get first 2 gift ideas
+        gifts = recommendations.split("\n")[:3]  # Get first 3 gift ideas
         for gift in gifts:
             if gift.strip():
                 st.subheader(f"🎁 {gift.strip()}")  # Show full AI suggestion
