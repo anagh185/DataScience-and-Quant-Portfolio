@@ -56,7 +56,7 @@ def get_product_links(gift_description):
 
 # 🎉 Fun Header
 st.markdown(
-    "<h1 style='text-align: center; color: #FF4081;'>💝 AI Valentine's Day Gift Guide 💝</h1>",
+    "<h1 style='text-align: center; color: #FF4081;'>💝 CupidAI Valentine's Day Gift Guide 💝</h1>",
     unsafe_allow_html=True
 )
 st.write("### 🌟 Let CupidAI find the **perfect** Valentine's Day gift for your loved one! 🎁")
