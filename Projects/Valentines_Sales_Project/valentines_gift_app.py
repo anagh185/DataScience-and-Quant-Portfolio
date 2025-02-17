@@ -1,48 +1,45 @@
+import openai
 import streamlit as st
-import requests
 import os
-import re
-import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
+# Streamlit App
+st.set_page_config(page_title="AI Valentine's Gift Generator", page_icon="💖")
+st.title("💖 AI Valentine's Gift Generator")
+st.subheader("Get a thoughtful, personalized gift idea for your special someone!")
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+# User Inputs
+with st.sidebar:
+    openai_api_key = st.text_input("OpenAI API Key", value="", type="password")
 
-# Streamlit UI Config
-st.set_page_config(page_title="CupidAI - Valentine's Gift Finder", layout="wide")
+recipient_name = st.text_input("Your partner's first name (optional)")
+relationship_type = st.selectbox("Your relationship type", ["Romantic Partner", "Spouse", "Crush", "Long-Distance Partner", "Other"])
+time_together = st.selectbox("How long have you been together?", ["Less than a year", "1-3 years", "3-5 years", "5+ years"])
 
-# Add this at the beginning of your app
-if 'HUGGING_FACE_TOKEN' not in st.secrets:
-    st.text_input("Enter your Hugging Face token:", key="hf_token", type="password")
-    if st.session_state.hf_token:
-        os.environ['HUGGING_FACE_TOKEN'] = st.session_state.hf_token
-else:
-    os.environ['HUGGING_FACE_TOKEN'] = st.secrets['HUGGING_FACE_TOKEN']
+# Optional deeper personalization without overwhelming the user
+memory = st.text_area("Share a special moment or something unique about them (optional)")
 
-# Load model with authentication
-@st.cache_resource
-def load_model():
-    try:
-        tokenizer = AutoTokenizer.from_pretrained(
-            "mistralai/Mistral-7B-Instruct-v0.3",
-            token=os.environ.get('HUGGING_FACE_TOKEN')
-        )
-        model = AutoModelForCausalLM.from_pretrained(
-            "mistralai/Mistral-7B-Instruct-v0.3",
-            token=os.environ.get('HUGGING_FACE_TOKEN')
-        )
-        # Uncomment the next line if you have a GPU and want to use it:
-        # model = model.to("cuda")
-        return tokenizer, model
-    except Exception as e:
-        st.error(f"Error loading model: {str(e)}")
-        return None, None
-
-# Only proceed with model loading if authentication is present
-if 'HUGGING_FACE_TOKEN' in os.environ:
-    tokenizer, model = load_model()
-    if tokenizer and model:
-        st.success("Local model loaded successfully.")
+if st.button("Generate Gift Idea 💝"):
+    if not openai_api_key.strip():
+        st.error("Please provide an OpenAI API key to generate personalized gifts.")
     else:
-        st.error("Failed to load model. Please check your authentication token.")
-else:
-    st.warning("Please enter your Hugging Face token to proceed.")
-
-# Rest of your code remains the same...
+        try:
+            client = openai.Client(api_key=openai_api_key)
+            
+            # AI Prompt
+            prompt = f"""
+            Generate a deeply personal and meaningful Valentine's Day gift idea for a {relationship_type}.
+            We've been together for {time_together}. Their name is {recipient_name if recipient_name else 'my partner'}.
+            {f'A special memory: {memory}' if memory else ''}
+            The gift should feel thoughtful, heartfelt, and unique—something that truly shows I care.
+            Keep the idea creative and personal, avoiding generic suggestions like 'a watch' or 'chocolates'.
+            """
+            
+            response = client.chat.completions.create(
+                model="gpt-4",
+                messages=[{"role": "system", "content": "You are a thoughtful and creative gift-giving assistant."},
+                          {"role": "user", "content": prompt}]
+            )
+            
+            gift_idea = response.choices[0].message.content.strip()
+            st.success(f"🎁 **Gift Idea:** {gift_idea}")
+        except Exception as e:
+            st.error(f"Error: {e}")
