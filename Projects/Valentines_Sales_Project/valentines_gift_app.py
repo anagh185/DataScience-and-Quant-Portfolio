@@ -21,7 +21,7 @@ def generate_gift_recommendations(budget, recipient, interests):
     """Generate AI-powered Valentine's Day gift recommendations."""
     messages = [
         {"role": "system", "content": "You are an expert Valentine's Day gift advisor."},
-        {"role": "user", "content": f"I need a Valentine's Day gift for {recipient}. My budget is {budget}. They love {interests}. Suggest 3 thoughtful gifts, with only the name of the gift in each line."}
+        {"role": "user", "content": f"I need a Valentine's Day gift for {recipient}. My budget is {budget}. They love {interests}. Suggest 3 thoughtful gifts. Each suggestion should include a detailed description of the gift, but the first few words should be the gift name for easy identification."}
     ]
 
     try:
@@ -29,7 +29,7 @@ def generate_gift_recommendations(budget, recipient, interests):
             model="gpt-4",
             messages=messages,
             temperature=0.7,
-            max_tokens=200
+            max_tokens=250
         )
         return response.choices[0].message.content
 
@@ -41,22 +41,22 @@ def generate_gift_recommendations(budget, recipient, interests):
         return f"❌ Unexpected Error: {str(e)}"
 
 # 🛍️ Function: Extract Keywords for Amazon/Etsy Search
-def clean_search_query(gift_name):
-    """Extracts only the key product name for better search results."""
-    gift_name = re.sub(r'[^a-zA-Z0-9\s]', '', gift_name)  # Remove special characters
-    gift_name = ' '.join(gift_name.split()[:4])  # Limit to first 4 words for better search
-    return gift_name
+def extract_search_keywords(gift_description):
+    """Extracts only the first 3-5 words of the gift name for better search results."""
+    gift_keywords = re.sub(r'[^a-zA-Z0-9\s]', '', gift_description)  # Remove special characters
+    gift_keywords = ' '.join(gift_keywords.split()[:4])  # Limit to first 4 words
+    return gift_keywords
 
-def get_product_links(gift_name):
-    """Fetches product search links with cleaned keywords."""
-    search_query = clean_search_query(gift_name)
+def get_product_links(gift_description):
+    """Fetches product search links using extracted keywords."""
+    search_query = extract_search_keywords(gift_description)
     amazon_url = f"https://www.amazon.com/s?k={search_query.replace(' ', '+')}"
     etsy_url = f"https://www.etsy.com/search?q={search_query.replace(' ', '+')}"
     return amazon_url, etsy_url
 
 # 🎉 Fun Header
 st.markdown(
-    "<h1 style='text-align: center; color: #FF4081;'>💝 CupidAI Valentine's Day Gift Guide 💝</h1>",
+    "<h1 style='text-align: center; color: #FF4081;'>💝 AI Valentine's Day Gift Guide 💝</h1>",
     unsafe_allow_html=True
 )
 st.write("### 🌟 Let CupidAI find the **perfect** Valentine's Day gift for your loved one! 🎁")
@@ -83,11 +83,10 @@ if st.button("🔮 Find the Perfect Gift!"):
         gifts = recommendations.split("\n")[:2]  # Get first 2 gift ideas
         for gift in gifts:
             if gift.strip():
-                clean_gift_name = clean_search_query(gift.strip())  # Extract clean search term
-                st.subheader(f"🎁 {clean_gift_name}")
+                st.subheader(f"🎁 {gift.strip()}")  # Show full AI suggestion
 
                 # 🔗 Generate Product Links
-                amazon_link, etsy_link = get_product_links(clean_gift_name)
+                amazon_link, etsy_link = get_product_links(gift.strip())
                 
                 col1, col2 = st.columns(2)
                 with col1:
