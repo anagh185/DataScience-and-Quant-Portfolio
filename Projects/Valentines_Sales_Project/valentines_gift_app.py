@@ -89,7 +89,8 @@ if submit:
                 {"role": "system", "content": "You are a thoughtful and creative gift-giving assistant."},
                 {"role": "user", "content": prompt}
             ],
-            "max_tokens": 300
+            "max_tokens": 500,
+            "temperature": 0.7
         }
 
         response = requests.post(url, json=data, headers=headers)
