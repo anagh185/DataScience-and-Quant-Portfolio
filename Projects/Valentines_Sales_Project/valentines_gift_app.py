@@ -58,7 +58,7 @@ if submit:
         # Define the AI prompt
         prompt = f"""
         You are a creative and romantic AI helping users find the perfect Valentine's Day gift.
-        Please generate a heartfelt, unique, and personal gift idea in this format, with each on a new line and it should be as AI is suggesting gifts:
+        Please generate a heartfelt, unique, and personal gift idea in this format, with each on a new line and it should be as AI is suggesting gifts in third person:
 
         💌 **[Random poetic line, short and romantic]**  
         \n🎁 **Gift Idea:** [Describe the personalized gift]  
