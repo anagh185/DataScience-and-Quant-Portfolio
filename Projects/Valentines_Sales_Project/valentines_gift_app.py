@@ -65,7 +65,6 @@ if submit:
         \n💖 **Why it’s special:** [Explain why it’s meaningful and how it will make them feel]  
         \n💕 **A final romantic touch:** [End with a short, poetic line or romantic sentiment]
 
-        Also, suggest 2 related gifts that match the theme of the personalized gift. These should be thoughtful and complement the main gift.
         
         **Details for the gift suggestion:**
         - Relationship: {relationship_type}
